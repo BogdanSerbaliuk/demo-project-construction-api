@@ -23,6 +23,10 @@ const app = express();
 app.use(cors({ origin: ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`);
+    next();
+});
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 pool.on("error", (err) => console.error("idle client error:", err));
